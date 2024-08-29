@@ -1,0 +1,16 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.github.mwiede:jsch:0.2.8' // JSch для работы с SFTP
+    implementation 'commons-codec:commons-codec:1.15' // Apache Commons Codec для вычисления хеша файлов
+}
+
+application {
+    mainClass = 'org.example.ModUpdater' // Укажите имя основного класса
+}
