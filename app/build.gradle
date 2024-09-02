@@ -1,16 +1,38 @@
 plugins {
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
     mavenCentral()
 }
 
+shadowJar {
+    archiveBaseName.set('myapp')
+    archiveVersion.set('1.0')
+    archiveClassifier.set('')
+}
+
 dependencies {
-    implementation 'com.github.mwiede:jsch:0.2.8' // JSch для работы с SFTP
+    implementation 'com.hierynomus:sshj:0.38.0' // JSch для работы с SFTP
     implementation 'commons-codec:commons-codec:1.15' // Apache Commons Codec для вычисления хеша файлов
+    implementation 'org.slf4j:slf4j-simple:2.0.9'
 }
 
 application {
     mainClass = 'org.example.ModUpdater' // Укажите имя основного класса
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+}
+
+compileJava.options.encoding = 'UTF-8' // устанавливает кодировку для компилируемого кода
+javadoc.options.encoding = 'UTF-8' // устанавливает кодировку для генерируемой документации
+compileTestJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
